@@ -6,14 +6,19 @@ using System.Net.Sockets;
 namespace prog
 {
 
-    public interface I
+    public interface PrintInfo
     {
         public void Print();
 
     }
-    public abstract class TC : I
+    /// <summary>
+    /// Класс полёта
+    /// </summary>
+    public abstract class TicketClass : PrintInfo
     {
+        //Имя класса
         public string Title { get; set; }
+        //Стоимость
         public ulong Price { get; set; }
 
         public void Print()
@@ -22,25 +27,38 @@ namespace prog
             Console.WriteLine("Стоимость:" + Price.ToString() + "Р");
         }
     }
-    public class EC : TC
+
+    /// <summary>
+    /// Эконом класс полёта
+    /// </summary>
+    public class EconomyClass : TicketClass
     {
-        public EC()
+        public EconomyClass()
         {
             Title = "Эконом";
             Price = 2000;
         }
     }
-    public class CC : TC
+
+    /// <summary>
+    /// Комфортный билет на самолет класс
+    /// </summary>
+    public class ComfortClass : TicketClass
     {
-        public CC()
+        public ComfortClass()
         {
             Title = "Комфорт";
             Price = 4000;
         }
     }
-    public class BC : TC
+
+
+    /// <summary>
+    /// Бизнесс класс 
+    /// </summary>
+    public class BiznessClass : TicketClass
     {
-        public BC()
+        public BiznessClass()
         {
             Title = "Бизнес";
             Price = 6000;
@@ -51,7 +69,7 @@ namespace prog
     /// Обьект билета
     /// </summary>
 
-    public class CrewMember : I
+    public class CrewMember : PrintInfo
     {
         public string Name { get; set; }
         public int Age { get; set; }
@@ -64,14 +82,22 @@ namespace prog
             Console.WriteLine("Должность:" + CrewMemberType);
         }
     }
-    public class Ticket : I
+    public class Ticket : PrintInfo
     {
         public CrewMember[] CrewMembers { get; set; }
+        //Название рейса
         public string Title { get; set; }
+
+        //Номер рейса
         public string RaceNumber { get; set; }
-        public TC TC { get; set; }
+
+        //Класс билета
+        public TicketClass TicketClass { get; set; }
+        //Тип сомалёта
         public string AirBusType { get; set; }
+        //дата и время вылета
         public DateTime DepartureDate { get; set; }
+        //Вывод информации
         public void Print()
         {
             Console.WriteLine("\n");
@@ -82,7 +108,8 @@ namespace prog
             Console.WriteLine("Тип самолёта:" + AirBusType);
             Console.WriteLine("Дата и время вылета:" + DepartureDate.ToString());
 
-            TC?.Print();
+            //Вывод информации о классе билета
+            TicketClass?.Print();
 
             Console.WriteLine("ЭКИПАЖ");
             for (int i = 0; i < CrewMembers?.Length; i++)
@@ -97,15 +124,21 @@ namespace prog
     }
     public class Program
     {
+        //Список билетов
         static Ticket[] _Tickets = new Ticket[]
         {
             new Ticket
             {
+                //Самолёт
                 AirBusType = "СУ-34",
+                //Дата вылета
                 DepartureDate = DateTime.Parse("24.10.2022 15:48:00"),
+                //Номер рейса
                 RaceNumber = "A-64",
+                //Название рейса
                 Title = "Москва - Тюмень",
-                TC = new CC(),
+                //Класс билета
+                TicketClass = new ComfortClass(),
                 CrewMembers= new CrewMember[]
                 {
                     new CrewMember
@@ -124,11 +157,16 @@ namespace prog
             },
             new Ticket
             {
+                //Самолёт №
                 AirBusType = "СУ-21",
+                //Дата вылета
                 DepartureDate = DateTime.Parse("23.11.2022 15:00:00"),
+                //Номер рейса
                 RaceNumber = "B-852",
+                //Название рейса
                 Title = "Калуга - Москва",
-                TC = new EC(),
+                //Класс билета
+                TicketClass = new EconomyClass(),
             }
         };
         public static void Main()
@@ -151,13 +189,13 @@ namespace prog
                     {
                         case 1:
                             {
-                                PT();
+                                PrintTickets();
                                 break;
                             }
                         case 2:
                             {
                                 Console.WriteLine("выберите билет  из списка:");
-                                PT();
+                                PrintTickets();
                                 int ticketNumber = int.Parse(Console.ReadLine());
                                 _Tickets[ticketNumber].Print();
                                 break;
@@ -198,7 +236,7 @@ namespace prog
                 Console.WriteLine("\n");
             }
         }
-        private static void PT()
+        private static void PrintTickets()
         {
 
             for (int i = 0; i < _Tickets.Length; i++)
