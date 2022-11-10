@@ -5,7 +5,7 @@ using System.Net.Sockets;
 
 namespace prog
 {
-
+    //Интерфейс
     public interface PrintInfo
     {
         public void Print();
