@@ -41,7 +41,7 @@ namespace prog
     }
 
     /// <summary>
-    /// Комфортный билет на самолет класс
+    /// Комфортный класс билет на самолет
     /// </summary>
     public class ComfortClass : TicketClass
     {
@@ -54,7 +54,7 @@ namespace prog
 
 
     /// <summary>
-    /// Бизнесс класс 
+    /// Бизнесс класс билет на самолет 
     /// </summary>
     public class BiznessClass : TicketClass
     {
